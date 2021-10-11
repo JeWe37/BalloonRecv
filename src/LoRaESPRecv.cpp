@@ -6,6 +6,7 @@
 #include <RadioLib.h>
 #include <WiFi.h>
 #include <WebServer.h>
+#include <uri/UriBraces.h>
 #include <SPIFFS.h>
 #include <ArduinoJson.h>
 #include <DNSServer.h>
@@ -43,7 +44,7 @@ using namespace websockets;
 
 WebsocketsServer ws;
 
-WebsocketsClient clients[4+1];
+WebsocketsClient clients[30+1];
 
 int clientCnt = 0;
 
@@ -274,12 +275,11 @@ void getData() {
 }
 #endif
 
-void rmClient(int j) {
-  for (int i = j; i < clientCnt; ++i)
+void rmClient() {
+  for (int i = idx; i < clientCnt; ++i)
     clients[i] = clients[i+1];
   clientCnt--;
-  if (idx >= j)
-    idx--;
+  idx--;
   Serial.println("Client disconnected now " + String(clientCnt) + " clients");
 }
 
@@ -422,7 +422,7 @@ void loop() {
         cl.pong(str);
         break;
       case WebsocketsEvent::ConnectionClosed:
-        rmClient(idx);
+        rmClient();
       }
     });
     Serial.println("Client connected now " + String(clientCnt) + " clients");

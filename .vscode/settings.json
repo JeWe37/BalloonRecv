@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "vector": "cpp",
+        "stl_vector.h": "c",
+        "*.tcc": "cpp",
+        "functional": "cpp",
+        "random": "cpp",
+        "list": "cpp"
+    }
+}
